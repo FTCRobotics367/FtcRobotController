@@ -1,0 +1,92 @@
+package org.firstinspires.ftc.teamcode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+/**
+ * Created by katie on 10/10/2019.
+ */
+
+
+//@Disabled
+@Autonomous(name="park", group="Autonomus")
+public class park3672020 extends OpMode {
+
+    private ElapsedTime runtime = new ElapsedTime();
+
+    private DcMotor motorLB;
+    private DcMotor motorLF;//ENCODER
+    private DcMotor motorRB;
+    private DcMotor motorRF;
+
+    double startPosition;
+    double currentPosition;
+    double distanceTravelled;
+    int v_state = 0;
+
+
+    @Override
+    public void init() {
+        telemetry.addData("Status", "Initialized");
+
+        motorLB = hardwareMap.dcMotor.get("LB");
+        motorLF = hardwareMap.dcMotor.get("LF");//ENCODER
+        motorRB = hardwareMap.dcMotor.get("RB");
+        motorRF = hardwareMap.dcMotor.get("RF");
+
+        motorRF.setDirection(DcMotor.Direction.REVERSE);//ENCODER
+        motorRB.setDirection(DcMotor.Direction.REVERSE);
+    }
+
+    @Override
+    public void init_loop() {
+    }
+
+    @Override
+    public void start() {
+        runtime.reset();
+    }
+
+    @Override
+    public void loop() {
+        telemetry.addData("Status", "Running: " + runtime.toString());
+
+        switch (v_state) {
+            case 0://figure out where we are at.
+                telemetry.addData("Case 0", startPosition);
+                startPosition = motorLF.getCurrentPosition();
+                v_state++;
+                break;
+
+            case 1: //drive forward and park
+                telemetry.addData("Case 1", startPosition);
+                currentPosition = motorLF.getCurrentPosition();
+                distanceTravelled = currentPosition - startPosition;
+                if (distanceTravelled <= 8000) {
+                    motorLB.setPower(0.5);
+                    motorLF.setPower(0.5);
+                    motorRB.setPower(0.5);
+                    motorRF.setPower(0.5);
+                }
+                else {
+                    motorLB.setPower(0.0);
+                    motorLF.setPower(0.0);
+                    motorRB.setPower(0.0);
+                    motorRF.setPower(0.0);
+                    motorLF.setDirection(DcMotor.Direction.REVERSE);//ENCODER
+                    motorLB.setDirection(DcMotor.Direction.REVERSE);
+                    motorRF.setDirection(DcMotor.Direction.FORWARD);//ENCODER
+                    motorRB.setDirection(DcMotor.Direction.FORWARD);
+                    startPosition = motorLF.getCurrentPosition();
+                    v_state++;
+                }
+                break;
+
+        }
+    }
+}

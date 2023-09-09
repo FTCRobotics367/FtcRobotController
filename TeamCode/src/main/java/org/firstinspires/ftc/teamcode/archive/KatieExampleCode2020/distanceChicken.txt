@@ -1,0 +1,102 @@
+package org.firstinspires.ftc.teamcode;
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import java.util.Locale;
+
+/**
+ * Created by katie on 10/10/2019.
+ */
+
+
+//@Disabled
+@TeleOp(name="distanceChicken", group="Iterative Opmode")
+public class distanceChicken extends OpMode {
+    private ElapsedTime runtime = new ElapsedTime();
+    DistanceSensor chicken;
+    double startPosition;
+    double currentPosition;
+    double distanceTravelled;
+    int v_state = 0;
+
+
+    @Override
+    public void init() {
+        telemetry.addData("Status", "Initialized");
+        chicken = hardwareMap.get(DistanceSensor.class, "chicken");
+    }
+    // @param sleepTime
+    public static void sleep(long sleepTime) {
+        long wakeupTime = System.currentTimeMillis() + sleepTime;
+        while (sleepTime > 0) {
+            try {
+                Thread.sleep(sleepTime);
+            }
+            catch (InterruptedException e) {
+            }
+            sleepTime = wakeupTime - System.currentTimeMillis();
+        }
+    }
+    @Override
+    public void init_loop() {
+    }
+
+    @Override
+    public void start() {
+        runtime.reset();
+    }
+
+    @Override
+    public void loop() {
+        telemetry.addData("Distance (cm)",
+                String.format(Locale.US, "%.02f", chicken.getDistance(DistanceUnit.CM)));
+        telemetry.addData("Case 4", "case4");
+        telemetry.addData("Distance (cm)",
+                String.format(Locale.US, "%.02f", chicken.getDistance(DistanceUnit.CM)));
+        double distanceSSS = chicken.getDistance(DistanceUnit.CM);
+        if (distanceSSS < 3.00) {
+            telemetry.addData("rings:", "4");
+            telemetry.addData("Distance (cm)",
+                    String.format(Locale.US, "%.02f", chicken.getDistance(DistanceUnit.CM)));
+        } else {
+            telemetry.addData("rings:", "idk");
+        }
+        if (distanceSSS < 8.00 & distanceSSS > 5.00) {
+            telemetry.addData("rings:", "1");
+            telemetry.addData("Distance (cm)",
+                    String.format(Locale.US, "%.02f", chicken.getDistance(DistanceUnit.CM)));
+        } else {
+            telemetry.addData("rings:", "idk");
+        }
+        if (distanceSSS > 8.50 && distanceSSS < 11.00) {
+            telemetry.addData("rings:", "0");
+            telemetry.addData("Distance (cm)",
+                    String.format(Locale.US, "%.02f", chicken.getDistance(DistanceUnit.CM)));
+        } else {
+            telemetry.addData("rings:", "idk");
+        }
+        }
+
+
+    @Override
+    public void stop() {
+    }
+
+}
+
+
+

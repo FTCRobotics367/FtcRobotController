@@ -1,0 +1,80 @@
+package org.firstinspires.ftc.teamcode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+/**
+ * Created by katie on 10/10/2019.
+ */
+
+
+//@Disabled
+@TeleOp(name="touchsensortestyay!", group="Iterative OpMode")
+public class touchtest1 extends OpMode {
+
+    private ElapsedTime runtime = new ElapsedTime();
+
+    DigitalChannel nugget;
+
+    double startPosition;
+    double currentPosition;
+    double distanceTravelled;
+    int v_state = 0;
+
+
+    @Override
+    public void init() {
+        telemetry.addData("Status", "Initialized");
+
+        //nugget = hardwareMap.digitalChannel.get("nugget");
+        nugget = hardwareMap.get(DigitalChannel.class, "nugget");
+    }
+
+    @Override
+    public void init_loop() {
+    }
+
+    @Override
+    public void start() {
+        runtime.reset();
+    }
+
+    @Override
+    public void loop() {
+        //nugget.setMode(DigitalChannel.Mode.INPUT);
+
+        telemetry.addData("Mode", "waiting");
+        telemetry.update();
+
+
+        telemetry.addData("Mode", "running");
+        telemetry.update();
+
+        /**if (nugget.isPressed()) {
+         telemetry.addData("TRUE", "cool");
+         } else {
+         telemetry.addData("FALSE", "neat");
+         }**/
+        nugget.setMode(DigitalChannel.Mode.INPUT);
+        if (nugget.getState() == false) {
+            // button is pressed.
+            telemetry.addData("Button", "PRESSED");
+        } else {
+            // button is not pressed.
+            telemetry.addData("Button", "NOT PRESSED");
+        }
+
+        telemetry.addData("Status", "Running");
+        telemetry.update();
+
+//        while (getRuntime() < 5 && touch.getState()) { idle(); }
+
+    }
+}

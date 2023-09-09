@@ -1,0 +1,163 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+/**
+ * Created by katie on 11/30/2020.
+ * comment
+ * both sticks forward=forward
+ * both sticks backward=backward
+ * left and right strafe on x axis of sticks-test and adjust to other part on joystick if needed
+ */
+@TeleOp(name="3672020", group="Iterative Opmode")
+//@Disabled
+public class tele3672020 extends OpMode {
+    private ElapsedTime runtime = new ElapsedTime();
+
+    private DcMotor motorLB;//ENCODER
+    private DcMotor motorLF;
+    private DcMotor motorRF;
+    private DcMotor motorRB;//ENCODER
+    private DcMotor fwoosh;//intake
+    private DcMotor rocket;
+    private Servo wop;//feeder holder thingie move it up and down
+    private Servo fwoop;//lil bar go move ring up yay
+    private Servo grabby;
+
+    double startgrab;
+    double stopgrab;
+    double startwop;
+    double stopwop;
+    double startfwoop;
+    double stopfwoop;
+
+    @Override
+    public void init() {
+        telemetry.addData("Status", "Initialized");
+
+        motorLB=hardwareMap.dcMotor.get("LB");//ENCODER
+        motorLF=hardwareMap.dcMotor.get("LF");
+        motorRB=hardwareMap.dcMotor.get("RB");//ENCODER
+        motorRF=hardwareMap.dcMotor.get("RF");
+        fwoosh=hardwareMap.dcMotor.get("fwoosh");
+        rocket=hardwareMap.dcMotor.get("rocket");
+        wop=hardwareMap.servo.get("wop");
+        fwoop= (Servo) hardwareMap.get("fwoop");
+        grabby = (Servo) hardwareMap.get("grabby");
+        startgrab = 0;
+        stopgrab = 1;
+        startwop = .47;
+        stopwop = 0;
+        startfwoop = 0;
+        stopfwoop = 1;
+        grabby.setPosition(startgrab);
+        fwoop.setPosition(startfwoop);
+        wop.setPosition(startwop);
+
+        rocket.setDirection(DcMotor.Direction.FORWARD);
+        motorRF.setDirection(DcMotor.Direction.REVERSE);
+        motorRB.setDirection(DcMotor.Direction.REVERSE);//ENCODER
+    }
+
+    @Override
+    public void init_loop() {
+    }
+
+    @Override
+    public void start() {
+        runtime.reset();
+    }
+
+    @Override
+    public void loop() {
+        float leftPower = gamepad1.left_stick_y;
+        float rightPower = gamepad1.right_stick_y;
+        float rightStrafePower = gamepad1.right_trigger;
+        float leftStrafePower = gamepad1.left_trigger;
+        float fwooshPowerOut = gamepad2.left_trigger;
+        float fwooshPowerIn = gamepad2.right_trigger;
+        float rocketLaunch = gamepad2.right_stick_y;
+        boolean up = gamepad2.dpad_up;
+        boolean rest = gamepad2.dpad_down;
+        boolean outandabout = gamepad2.left_bumper;
+        boolean lezgo = gamepad2.y;
+        boolean grabbygo = gamepad2.right_bumper;
+        float fwooshytest = gamepad2.left_stick_y;
+
+        leftPower = Range.clip(leftPower, -1, 1);
+        rightPower = Range.clip(rightPower, -1, 1);
+        rightStrafePower = Range.clip(rightStrafePower, -1, 1);
+        leftStrafePower = Range.clip(leftStrafePower, -1, 1);
+        fwooshPowerOut = Range.clip(fwooshPowerOut, -1, 0);
+        fwooshPowerIn = Range.clip(fwooshPowerIn, 0, 1);
+        rocketLaunch = (float) Range.clip(rocketLaunch,0, 0.65);
+
+        motorRB.setPower(rightPower);//ENCODER
+        motorRF.setPower(rightPower);
+        motorLB.setPower(leftPower);//ENCODER
+        motorLF.setPower(leftPower);
+
+        motorRB.setPower(-leftStrafePower);
+        motorRF.setPower(leftStrafePower);
+        motorLB.setPower(leftStrafePower);
+        motorLF.setPower(-leftStrafePower);
+
+        motorRB.setPower(rightStrafePower);
+        motorRF.setPower(-rightStrafePower);
+        motorLB.setPower(-rightStrafePower);
+        motorLF.setPower(rightStrafePower);
+
+        fwoosh.setPower(fwooshPowerIn);
+        fwoosh.setPower(fwooshPowerOut);
+        fwoosh.setPower(fwooshytest);
+
+        rocket.setPower(rocketLaunch);
+
+        if (up) {
+            wop.setPosition(stopwop);
+        }
+        else {
+        }
+        if (rest) {
+            wop.setPosition(startwop);
+        }
+        else {
+        }
+
+        if (outandabout) {
+            fwoop.setPosition(stopfwoop);
+        }
+        else {
+            fwoop.setPosition(startfwoop);
+        }
+
+        if (grabbygo) {
+            grabby.setPosition(stopgrab);
+        }
+        else {
+            grabby.setPosition(startgrab);
+        }
+/**
+        if (lezgo) {
+
+                fwoop.setPosition(stopfwoop);
+                wop.setPosition(stopwop);
+                rocket.setPower(rocketLaunch);
+                fwoop.setPosition(startfwoop);
+
+        } else { }**/
+
+    }
+
+    @Override
+    public void stop() {
+    }
+
+}
