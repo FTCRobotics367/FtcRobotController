@@ -29,13 +29,14 @@
 
 package org.firstinspires.ftc.teamcode.archive.ftc22_23;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-
+@Disabled
 @TeleOp(name="teleop_example", group="Robot")
 //@Disabled
 public class TeleopExample extends OpMode {

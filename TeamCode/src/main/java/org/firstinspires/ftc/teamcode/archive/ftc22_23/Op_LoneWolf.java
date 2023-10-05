@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.archive.ftc22_23;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -38,7 +39,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 //15055 is the best team
-
+@Disabled
 @TeleOp(name="Op_LoneWolf", group="Robot")
 //@Disabled
 public class Op_LoneWolf extends OpMode {

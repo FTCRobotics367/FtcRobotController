@@ -39,9 +39,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.Set;
 
-
-@Autonomous(name="Auto_Poll_Encoder_Right", group="Robot")
 @Disabled
+@Autonomous(name="Auto_Poll_Encoder_Right", group="Robot")
 public class Auto_Poll_Encoder_Right extends LinearOpMode {
 
     /* Declare OpMode members. */

@@ -30,12 +30,13 @@
 package org.firstinspires.ftc.teamcode.archive.ftc22_23;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-
+@Disabled
 @Autonomous(name="Auto_Poll_Right", group="Robot")
 //@Disabled
 public class Auto_Poll_Right extends LinearOpMode {

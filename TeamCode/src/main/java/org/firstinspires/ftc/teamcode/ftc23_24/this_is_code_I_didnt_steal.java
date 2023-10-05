@@ -27,32 +27,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.archive.ftc22_23;
+package org.firstinspires.ftc.teamcode.ftc23_24;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//15055 is the best team
-@Disabled
-@TeleOp(name="Salad_Mobile", group="Robot")
 //@Disabled
-public class Teleop_Salad extends OpMode {
+@TeleOp(name="SEXY_CODE:BY_BEN", group="Robot")
+//@Disabled
+public class this_is_code_I_didnt_steal extends OpMode {
 
     /* Declare OpMode members. */
-    public DcMotor  leftfrontDrive   = null;
-    public DcMotor  leftbackDrive    = null;
-    public DcMotor  rightfrontDrive  = null;
-    public DcMotor  rightbackDrive   = null;
-    public DcMotor  armleft = null;
-    public DcMotor  armright = null;
-    public DcMotor  wrist = null;
-    private Servo claw = null;
-    private Servo lock1 = null;
+    public DcMotor  LFDR   = null;
+    //left front drive
+    public DcMotor  LBDR    = null;
+    //LEFT BACK DRIVE
+    public DcMotor  RFDR  = null;
+    //rightfrontDrive
+    public DcMotor  JFK   = null;
+    //rightbackDrive
+    public DcMotor  spin = null;
+    public DcMotor hold = null;
+    //public DcMotor  armright = null;
+    //public DcMotor  wrist = null;
+    //private Servo claw = null;
+    //private Servo lock1 = null;
 
 
 
@@ -64,26 +66,28 @@ public class Teleop_Salad extends OpMode {
     @Override
     public void init() {
         // Define and Initialize Motors
-        leftbackDrive  = hardwareMap.get(DcMotor.class, "LBDrive");
-        leftfrontDrive = hardwareMap.get(DcMotor.class, "LFDrive");
-        rightbackDrive = hardwareMap.get(DcMotor.class, "RBDrive");
-        rightfrontDrive = hardwareMap.get(DcMotor.class, "RFDrive");
-        armleft = hardwareMap.get(DcMotor.class, "Larm");
-        armright = hardwareMap.get(DcMotor.class, "Rarm");
-        wrist = hardwareMap.get(DcMotor.class, "Wrist");
-        claw = hardwareMap.get(Servo.class, "Claw");
-        lock1 = hardwareMap.get(Servo.class, "Lock1");
+        LBDR  = hardwareMap.get(DcMotor.class, "LBDrive");
+        LFDR = hardwareMap.get(DcMotor.class, "LFDrive");
+        JFK = hardwareMap.get(DcMotor.class, "RBDrive");
+        RFDR = hardwareMap.get(DcMotor.class, "RFDrive");
+        spin = hardwareMap.get(DcMotor.class, "spin");
+        hold = hardwareMap.get(DcMotor.class, "hold");
+        //armright = hardwareMap.get(DcMotor.class, "Rarm");
+        //wrist = hardwareMap.get(DcMotor.class, "Wrist");
+        //claw = hardwareMap.get(Servo.class, "Claw");
+        //lock1 = hardwareMap.get(Servo.class, "Lock1");
 
 
 
 
-        leftbackDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftfrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightbackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightfrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        armleft.setDirection(DcMotor.Direction.REVERSE);
-        armright.setDirection(DcMotor.Direction.REVERSE);
-        wrist.setDirection(DcMotor.Direction.FORWARD);
+        LBDR.setDirection(DcMotor.Direction.FORWARD);
+        LFDR.setDirection(DcMotor.Direction.REVERSE);
+        JFK.setDirection(DcMotor.Direction.REVERSE);
+        RFDR.setDirection(DcMotor.Direction.FORWARD);
+        spin.setDirection(DcMotor.Direction.FORWARD);
+        hold.setDirection(DcMotor.Direction.FORWARD);
+        //armright.setDirection(DcMotor.Direction.REVERSE);
+        //wrist.setDirection(DcMotor.Direction.FORWARD);
 
 
 
@@ -107,10 +111,8 @@ public class Teleop_Salad extends OpMode {
     /*
      * Code to run ONCE when the driver hits PLAY
      */
-    @Override
-    public void start() {
-        lock1.setPosition(0);
-    }
+    //@Override
+
 
 
     /*
@@ -118,51 +120,57 @@ public class Teleop_Salad extends OpMode {
      */
     @Override
     public void loop() {
-        double left;
-        double right;
-        double aleft;
-        double aright;
-        double wrist1;
+        double turn;
+        double drive;
+        double strafe;
+
 
 
 
         // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
-        left = -gamepad1.left_stick_y/2;
-        right = -gamepad1.right_stick_y/2;
-        aleft = -gamepad2.left_stick_y/2;
-        aright = -gamepad2.left_stick_y/2;
-        wrist1 = -gamepad2.right_stick_y/1.5;
+        turn = -gamepad1.left_stick_x/2;
+        drive = -gamepad1.right_stick_y/2;
+        strafe = -gamepad1.right_stick_x/2;
 
 
 
-        leftbackDrive.setPower(left);
-        leftfrontDrive.setPower(left);
-        rightbackDrive.setPower(right);
-        rightfrontDrive.setPower(right);
-        armleft.setPower(aleft);
-        armright.setPower(aright);
-        wrist.setPower(wrist1);
 
-        //Boost mode
+        //driving
+        LBDR.setPower(drive);
+        LFDR.setPower(drive);
+        JFK.setPower(drive);
+        RFDR.setPower(drive);
+
+        //turning
+        LBDR.setPower(turn);
+        LFDR.setPower(turn);
+        JFK.setPower(-turn);
+        RFDR.setPower(-turn);
+
+        //probably strafing i have no clue man i need help
+        if ((strafe > .5 )||(strafe < -.5)) {
+            LBDR.setPower(strafe);
+            LFDR.setPower(-strafe);
+            JFK.setPower(-strafe);
+            RFDR.setPower(strafe);
+        }
+
+        if (gamepad1.x){
+            spin.setPower(100);
+        }
+        while (gamepad1.circle) {
+            hold.setPower(100);
+        }
+
+        //zoomin vroomin button
         if (gamepad1.right_bumper){
-            leftbackDrive.setPower(left*2);
-            leftfrontDrive.setPower(left*2);
-            rightbackDrive.setPower(right*2);
-            rightfrontDrive.setPower(right*2);
-        }
-
-        if (gamepad2.left_bumper){
-            armleft.setPower(aleft*2);
-            armright.setPower(aright*2);
+            LBDR.setPower(drive*2);
+            LFDR.setPower(drive*2);
+            JFK.setPower(drive*2);
+            RFDR.setPower(drive*2);
         }
 
 
-        if (gamepad2.right_bumper) {
-            claw.setPosition(.90);
-        }
-        else {
-            claw.setPosition(0);
-        }
 
     }
 

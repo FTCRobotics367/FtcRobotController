@@ -37,9 +37,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-
-@Autonomous(name="Robot: Auto_time", group="Robot")
 @Disabled
+@Autonomous(name="Robot: Auto_time", group="Robot")
 public class Auto_Time extends LinearOpMode {
 
     /* Declare OpMode members. */
