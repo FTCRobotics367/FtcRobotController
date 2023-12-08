@@ -37,7 +37,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 //@Disabled
 @TeleOp(name="SEXY_CODE:BY_BEN", group="Robot")
-//@Disabled
+@Disabled
 public class this_is_code_I_didnt_steal extends OpMode {
 
     /* Declare OpMode members. */
